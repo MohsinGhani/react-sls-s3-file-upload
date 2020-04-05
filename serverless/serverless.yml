@@ -1,0 +1,18 @@
+service: upload-demo
+
+provider:
+  name: aws
+  runtime: nodejs10.x
+  role: arn:aws:iam::xxxxxxxx:role/dynamodbAndCognito ## you can write your role ARN here which allow lambda to access s3 and put object in it
+  apiGateway:
+    binaryMediaTypes: # Optional binary media types the API might return
+      - "*/*"
+
+functions:
+  upload:
+    handler: handler.upload
+    events:
+      - http:
+          path: api/upload
+          method: post
+          cors: true
